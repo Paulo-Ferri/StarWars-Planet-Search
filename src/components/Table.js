@@ -41,7 +41,7 @@ function Table() {
         </thead>
         <tbody>
           {data && data.filter((planet) => planet.name
-            .includes(filterByName.name !== '' ? filterByName.name : ''))
+            .includes(filterByName.name))
             .map((planet) => (
               <tr key={ planet.name }>
                 <td>{ planet.name }</td>
