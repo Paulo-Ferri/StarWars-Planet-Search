@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import MyContext from './MyContext';
 
 function Provider({ children }) {
+  // faz a chamada a API e salva no estado o retorno:
   const [data, setData] = useState('');
   const apiCall = async () => {
     const response = await fetch('https://swapi-trybe.herokuapp.com/api/planets');
@@ -10,8 +11,15 @@ function Provider({ children }) {
     setData(results);
   };
   useEffect(() => { apiCall(); }, []);
+
+  // estado para alterar o tipo do filtro:
+  const [filter, setFilter] = useState([]);
+  const createFilter = (newFilter) => {
+    setFilter([...filter, newFilter]);
+  };
+
   return (
-    <MyContext.Provider value={ data }>
+    <MyContext.Provider value={ { data, createFilter } }>
       {children}
     </MyContext.Provider>
   );

@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import context from '../context/MyContext';
 
 function Table() {
-  const data = useContext(context);
+  const { data } = useContext(context);
   const [filterByName, setFilterByName] = useState({
     name: '',
   });
