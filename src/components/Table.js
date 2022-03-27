@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import context from '../context/MyContext';
 
 function Table() {
-  const { data } = useContext(context);
+  const { data, filter } = useContext(context);
   const [filterByName, setFilterByName] = useState({
     name: '',
   });
@@ -11,6 +11,35 @@ function Table() {
       name: target.value,
     });
   };
+  // faz o filtro da data a partir dos parametros estabelecidos:
+  // por nome:
+  const filterByPlanetName = () => {
+    const filteredByName = data
+      .filter((planet) => planet.name.includes(filterByName.name));
+    return filteredByName;
+  };
+  // por filtros de numero:
+  const filterByValues = () => {
+    let filteredPlanets = [...filterByPlanetName()];
+    if (filter) {
+      filter.forEach((item) => {
+        filteredPlanets = filteredPlanets.filter((element) => {
+          const { column, comparision, value } = item;
+          switch (comparision) {
+          case 'maior que':
+            return +element[column] > +value;
+          case 'menor que':
+            return +element[column] < +value;
+          case 'igual a':
+            return +element[column] === +value;
+          default: return undefined;
+          }
+        });
+      });
+    }
+    return filteredPlanets;
+  };
+
   return (
     <>
       <label htmlFor="search">
@@ -40,9 +69,8 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          {data && data.filter((planet) => planet.name
-            .includes(filterByName.name))
-            .map((planet) => (
+          {data
+            && filterByValues().map((planet) => (
               <tr key={ planet.name }>
                 <td>{ planet.name }</td>
                 <td>{ planet.rotation_period }</td>
@@ -57,7 +85,8 @@ function Table() {
                 <td>{ planet.created }</td>
                 <td>{ planet.edited }</td>
                 <td>{ planet.url }</td>
-              </tr>))}
+              </tr>
+            ))}
         </tbody>
       </table>
     </>

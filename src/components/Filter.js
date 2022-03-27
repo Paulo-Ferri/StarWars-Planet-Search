@@ -4,9 +4,9 @@ import context from '../context/MyContext';
 function Filter() {
   const { createFilter } = useContext(context);
   const [filterByNumericValues, setFilterByNumericValues] = useState({
-    column: '',
-    comparision: '',
-    value: '',
+    column: 'population',
+    comparision: 'maior que',
+    value: '0',
   });
 
   const handleSelect = (value, id) => {
@@ -35,6 +35,7 @@ function Filter() {
           id="dropdown"
           data-testid="column-filter"
           onChange={ (e) => handleSelect(e.target.value, e.target.id) }
+          value={ filterByNumericValues.column }
         >
           <option value="population">population</option>
           <option value="orbital_period">orbital_period</option>
@@ -48,17 +49,20 @@ function Filter() {
           id="comparator"
           data-testid="comparison-filter"
           onChange={ (e) => handleSelect(e.target.value, e.target.id) }
+          value={ filterByNumericValues.comparision }
         >
           <option>maior que</option>
           <option>menor que</option>
           <option>igual a</option>
         </select>
       </label>
-      <label htmlFor="valueFilter" data-testid="value-filter">
+      <label htmlFor="valueFilter">
         <input
+          data-testid="value-filter"
           type="number"
           id="valueFilter"
           onChange={ (e) => handleSelect(e.target.value, e.target.id) }
+          value={ filterByNumericValues.value }
         />
       </label>
       <button

@@ -14,12 +14,13 @@ function Provider({ children }) {
 
   // estado para alterar o tipo do filtro:
   const [filter, setFilter] = useState([]);
+
   const createFilter = (newFilter) => {
     setFilter([...filter, newFilter]);
   };
 
   return (
-    <MyContext.Provider value={ { data, createFilter } }>
+    <MyContext.Provider value={ { data, createFilter, filter } }>
       {children}
     </MyContext.Provider>
   );
