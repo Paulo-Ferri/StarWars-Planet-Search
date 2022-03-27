@@ -12,15 +12,11 @@ function Table() {
     });
   };
   // faz o filtro da data a partir dos parametros estabelecidos:
-  // por nome:
-  const filterByPlanetName = () => {
-    const filteredByName = data
-      .filter((planet) => planet.name.includes(filterByName.name));
-    return filteredByName;
-  };
-  // por filtros de numero:
   const filterByValues = () => {
-    let filteredPlanets = [...filterByPlanetName()];
+    // por nome:
+    let filteredPlanets = data
+      .filter((planet) => planet.name.includes(filterByName.name));
+    // por filtros de numero:
     if (filter) {
       filter.forEach((item) => {
         filteredPlanets = filteredPlanets.filter((element) => {
