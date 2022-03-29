@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import context from '../context/MyContext';
 
 function Filter() {
-  const { createFilter } = useContext(context);
+  const { createFilter, filter } = useContext(context);
   const [filterByNumericValues, setFilterByNumericValues] = useState({
     column: 'population',
     comparision: 'maior que',
@@ -28,6 +28,23 @@ function Filter() {
     createFilter(filterByNumericValues);
   };
 
+  const createFiltersOptions = () => {
+    const options = ['population',
+      'orbital_period',
+      'diameter',
+      'rotation_period',
+      'surface_water'];
+    if (filter.length > 0) {
+      let filteredOptions = '';
+      filter
+        .forEach((filtro) => {
+          console.log('filtro:', filtro);
+          filteredOptions = options.filter((option) => option !== filtro.column);
+        });
+      return filteredOptions;
+    }
+    return options;
+  };
   return (
     <form>
       <label htmlFor="dropdown">
@@ -37,11 +54,10 @@ function Filter() {
           onChange={ (e) => handleSelect(e.target.value, e.target.id) }
           value={ filterByNumericValues.column }
         >
-          <option value="population">population</option>
-          <option value="orbital_period">orbital_period</option>
-          <option value="diameter">diameter</option>
-          <option value="rotation_period">rotation_period</option>
-          <option value="surface_water">surface_water</option>
+          {createFiltersOptions()
+            .map((option) => (
+              <option key={ option } value={ option }>{option}</option>
+            ))}
         </select>
       </label>
       <label htmlFor="comparator">
