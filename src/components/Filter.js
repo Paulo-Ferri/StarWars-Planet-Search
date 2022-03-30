@@ -35,12 +35,10 @@ function Filter() {
       'rotation_period',
       'surface_water'];
     if (filter.length > 0) {
-      let filteredOptions = '';
-      filter
-        .forEach((filtro) => {
-          console.log('filtro:', filtro);
-          filteredOptions = options.filter((option) => option !== filtro.column);
-        });
+      let filteredOptions = [];
+      const filterValues = [];
+      filter.forEach((filtro) => filterValues.push(filtro.column));
+      filteredOptions = options.filter((option) => !filterValues.includes(option));
       return filteredOptions;
     }
     return options;
